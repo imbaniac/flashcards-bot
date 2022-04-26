@@ -69,16 +69,21 @@ export const showLibraryAction = async (ctx) => {
 
     const buttons = createPaginationChoices(pages, currentPage);
 
-    Object.keys(buttons).forEach((page) => {
+    Object.keys(buttons).forEach((page, i) => {
         inlineKeyboard.text(buttons[page], `change_page:${page}`);
+        if (i === Object.keys(buttons).length - 1) {
+            inlineKeyboard.row();
+        }
     });
 
+    inlineKeyboard.text("Close", "delete");
+
     try {
-        await ctx.editMessageText("Your saved words", {
+        await ctx.editMessageText(`Your ${totalCount} saved words`, {
             reply_markup: inlineKeyboard,
         });
     } catch (e) {
-        await ctx.reply("Your saved words", {
+        await ctx.reply(`Your ${totalCount} saved words`, {
             reply_markup: inlineKeyboard,
         });
     }
@@ -97,7 +102,7 @@ export const viewWordAction = async (ctx) => {
     inlineKeyboard
         .text("Delete  ❌", `delete_word:${word.id}`)
         .text("Listen", `audio:${word.value}`)
-        .text("Go back", "close_view_word");
+        .text("Close", "close_view_word");
 
     await ctx.editMessageText(renderTranslation(word), {
         parse_mode: "HTML",
