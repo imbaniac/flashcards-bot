@@ -9,7 +9,7 @@ export const translateAction = async (ctx) => {
     console.log("TRANSLATING");
     let word = await prisma.word.findUnique({
         where: {
-            value: ctx.message.text,
+            value: ctx.message.text.toLocaleLowerCase(),
         },
     });
 
