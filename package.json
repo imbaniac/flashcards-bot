@@ -1,0 +1,24 @@
+{
+    "name": "flashcards-bot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node --experimental-specifier-resolution=node bot.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@prisma/client": "^3.12.0",
+        "cheerio": "^1.0.0-rc.10",
+        "env-var": "^7.1.1",
+        "grammy": "^1.8.0",
+        "grammy-inline-menu": "^7.0.2",
+        "node-cron": "^3.0.0"
+    },
+    "devDependencies": {
+        "prisma": "^3.12.0"
+    }
+}

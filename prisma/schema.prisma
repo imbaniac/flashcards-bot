@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id
+  name String
+  words UserWord[]
+  createdAt DateTime @default(now())
+  time String @default("14:00")
+  notificationsEnabled Boolean @default(false)
+  timezoneOffset String @default("+00:00")
+}
+
+model Word {
+  id Int @id @default(autoincrement())
+  value String @unique
+  translations String
+  examples String
+  users UserWord[]
+  createdAt DateTime @default(now())
+}
+
+model UserWord {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  word Word @relation(fields: [wordId], references: [id])
+  wordId Int
+  createdAt DateTime @default(now())
+  results Result[]
+}
+
+model Result {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  
+  grade Int
+  factor String
+  repetitions Int
+  date String
+  interval Int
+
+  userWordId Int
+  word UserWord @relation(fields: [userWordId], references: [id])
+}
