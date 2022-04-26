@@ -16,10 +16,10 @@ export const notificationsAction = async (ctx) => {
         (tz) => tz.offset === user.timezoneOffset
     );
 
-    ctx.session.time = user.time.replace(":", "|");
+    ctx.session.time = user.time ? user.time.replace(":", "|") : "14|00";
 
     const inlineKeyboard = new InlineKeyboard()
-        .text(`Time: ${user.time}`, `edit_notifications_time`)
+        .text(`Time: ${user.time || "14:00"}`, `edit_notifications_time`)
         .row()
         .text(
             `Timezone: ${userTimezone?.label || MINIMAL_TIMEZONE_SET[0].label}`,
@@ -62,9 +62,10 @@ export const editNotificationsTimeAction = async (ctx) => {
         where: { id: ctx.from.id },
     });
 
+    console.log("WTF", ctx.session.time, user.time.replace(":", "|"));
     const time = ctx.session.time || user.time.replace(":", "|");
 
-    const [hours, minutes] = time.split("/").map(Number);
+    const [hours, minutes] = time.split("|").map(Number);
 
     const inlineKeyboard = new InlineKeyboard();
 
@@ -144,7 +145,7 @@ export const setUserTimezoneAction = async (ctx) => {
 };
 
 export const setUserTimeAction = async (ctx) => {
-    const [hours, minutes] = ctx.session.time.split("/");
+    const [hours, minutes] = ctx.session.time.split("|");
 
     const time = `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
 
