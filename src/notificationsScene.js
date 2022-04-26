@@ -62,7 +62,6 @@ export const editNotificationsTimeAction = async (ctx) => {
         where: { id: ctx.from.id },
     });
 
-    console.log("WTF", ctx.session.time, user.time.replace(":", "|"));
     const time = ctx.session.time || user.time.replace(":", "|");
 
     const [hours, minutes] = time.split("|").map(Number);
@@ -71,23 +70,23 @@ export const editNotificationsTimeAction = async (ctx) => {
 
     inlineKeyboard.text(
         "<",
-        `update_notifications_time:${hours > 0 ? hours - 1 : 23}/${minutes}`
+        `update_notifications_time:${hours > 0 ? hours - 1 : 23}|${minutes}`
     );
     inlineKeyboard.text(String(hours).padStart(2, "0"));
     inlineKeyboard.text(
         ">",
-        `update_notifications_time:${hours < 23 ? hours + 1 : 0}/${minutes}`
+        `update_notifications_time:${hours < 23 ? hours + 1 : 0}|${minutes}`
     );
     inlineKeyboard.row();
 
     inlineKeyboard.text(
         "<",
-        `update_notifications_time:${hours}/${minutes > 0 ? minutes - 1 : 59}`
+        `update_notifications_time:${hours}|${minutes > 0 ? minutes - 1 : 59}`
     );
     inlineKeyboard.text(String(minutes).padStart(2, "0"));
     inlineKeyboard.text(
         ">",
-        `update_notifications_time:${hours}/${minutes < 59 ? minutes + 1 : 0}`
+        `update_notifications_time:${hours}|${minutes < 59 ? minutes + 1 : 0}`
     );
     inlineKeyboard.row();
 
