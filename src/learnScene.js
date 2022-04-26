@@ -77,9 +77,11 @@ export const showAnswerAction = async (ctx) => {
     word.translations = JSON.parse(word.translations);
 
     const inlineKeyboard = new InlineKeyboard()
-        .text("Сложно 😔", "answer:0")
-        .text("Так себе 🤔", "answer:3")
-        .text("Легко ✅", "answer:5");
+        .text("Listen", `audio:${word.value}`)
+        .row()
+        .text("Hard 😔", "answer:0")
+        .text("So-so 🤔", "answer:3")
+        .text("Easy ✅", "answer:5");
 
     await ctx.editMessageText(renderTranslation(word), {
         parse_mode: "HTML",

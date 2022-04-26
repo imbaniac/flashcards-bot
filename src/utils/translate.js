@@ -1,6 +1,6 @@
 import Reverso from "./Reverso.js";
 
-const reverso = new Reverso();
+export const reverso = new Reverso();
 
 const languageMapping = {
     en: "English",

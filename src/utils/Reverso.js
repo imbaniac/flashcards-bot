@@ -182,4 +182,11 @@ export default class Reverso {
                 );
             });
     }
+
+    getVoiceUrl(text) {
+        const url = `https://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetVoiceStream/voiceName=Heather22k?voiceSpeed=100&inputText=${btoa(
+            text
+        )}`;
+        return url;
+    }
 }

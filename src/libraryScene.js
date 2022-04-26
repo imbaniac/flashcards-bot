@@ -96,6 +96,7 @@ export const viewWordAction = async (ctx) => {
     const inlineKeyboard = new InlineKeyboard();
     inlineKeyboard
         .text("Delete  ❌", `delete_word:${word.id}`)
+        .text("Listen", `audio:${word.value}`)
         .text("Go back", "close_view_word");
 
     await ctx.editMessageText(renderTranslation(word), {

@@ -11,7 +11,11 @@ import {
     viewWordAction,
 } from "./src/libraryScene";
 import { prisma } from "./src/utils/prisma";
-import { translateAction, saveWordAction } from "./src/translateScene";
+import {
+    translateAction,
+    saveWordAction,
+    listenWordAction,
+} from "./src/translateScene";
 import {
     notificationsAction,
     notificationsToggleAction,
@@ -120,6 +124,15 @@ async function main() {
         if (key === "update_notifications_time") {
             ctx.session.time = data;
             await editNotificationsTimeAction(ctx);
+        }
+
+        if (key === "audio") {
+            ctx.session.audio = data;
+            await listenWordAction(ctx);
+        }
+
+        if (key === "delete") {
+            await ctx.deleteMessage();
         }
 
         console.log(
