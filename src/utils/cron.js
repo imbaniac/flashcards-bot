@@ -11,7 +11,7 @@ export const scheduleNotification = async (userId, api) => {
     });
 
     if (!user.time || !user.timezoneOffset || !user.notificationsEnabled) {
-        return false;
+        return null;
     }
 
     const [hours, minutes] = user.time.split(":").map(Number);
