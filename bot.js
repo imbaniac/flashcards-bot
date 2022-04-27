@@ -54,14 +54,24 @@ async function main() {
             "Welcome! I can help you learn new words. Just send me a word and I will translate it for you."
         );
         try {
-            await prisma.user.create({
-                data: {
+            await prisma.user.upsert({
+                where: {
+                    id: ctx.from.id,
+                },
+                create: {
                     id: ctx.from.id,
                     name: ctx.from.first_name + " " + ctx.from.last_name,
+                    username: ctx.from.username,
+                    language: ctx.from.language_code,
+                },
+                update: {
+                    name: ctx.from.first_name + " " + ctx.from.last_name,
+                    username: ctx.from.username,
+                    language: ctx.from.language_code,
                 },
             });
         } catch (e) {
-            console.log("User already exists");
+            console.log("User already exists", e);
         }
 
         const newJob = await scheduleNotification(ctx.from.id, ctx.api);

@@ -51,7 +51,11 @@ const createPaginationChoices = (totalPages, currentPage) => {
 export const showLibraryAction = async (ctx) => {
     const currentPage = ctx.session.currentPage;
 
-    const totalCount = await prisma.userWord.count();
+    const totalCount = await prisma.userWord.count({
+        where: {
+            userId: ctx.from.id,
+        },
+    });
 
     const library = await prisma.userWord.findMany({
         where: { userId: ctx.from.id },

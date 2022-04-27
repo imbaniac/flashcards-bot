@@ -13,6 +13,8 @@ datasource db {
 model User {
   id Int @id
   name String
+  username String @default("Anonymous")
+  language String @default("en")
   words UserWord[]
   createdAt DateTime @default(now())
   time String @default("14:00")
